@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "138047618205",
+    "firebase_url": "https://smart-home-6da5a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smart-home-6da5a",
+    "storage_bucket": "smart-home-6da5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138047618205:android:9f70e5aabf28ba6ee3e874",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk3ABb3Fk67NSVys1AgTjI0ECFOs3GJkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138047618205:android:5c4d5c070c449661e3e874",
+        "android_client_info": {
+          "package_name": "com.example.smart_home"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk3ABb3Fk67NSVys1AgTjI0ECFOs3GJkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138047618205:android:375eff65c2ca74ade3e874",
+        "android_client_info": {
+          "package_name": "com.example.tubes_smart_home"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk3ABb3Fk67NSVys1AgTjI0ECFOs3GJkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
