@@ -1,4 +1,4 @@
-# tubes_smart_home
+# Project IoT Smart Home App
 
 A new Flutter project.
 
