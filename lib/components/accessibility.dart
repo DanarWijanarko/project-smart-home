@@ -38,7 +38,7 @@ class MyAccessibility extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width / 1.45,
+            width: MediaQuery.of(context).size.width / 1.6,
             child: Text(
               "Apakah Anda ingin menyalakan perangkat elektronik secara otomatis pada saat masuk rumah?",
               style: TextStyle(

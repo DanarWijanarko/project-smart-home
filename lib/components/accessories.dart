@@ -23,7 +23,7 @@ class MyAccessories extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       width: MediaQuery.of(context).size.width / 2 - 19.5,
-      height: 185,
+      height: 165,
       duration: const Duration(milliseconds: 250),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -57,7 +57,7 @@ class MyAccessories extends StatelessWidget {
                 title,
                 style: TextStyle(
                   color: black,
-                  fontSize: 19,
+                  fontSize: 16,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -67,7 +67,7 @@ class MyAccessories extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
-                    width: 128,
+                    width: 102,
                     child: Text(
                       subtitle,
                       style: TextStyle(

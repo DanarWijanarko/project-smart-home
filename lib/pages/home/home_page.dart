@@ -17,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLampOn = false;
   bool isGateOpened = false;
   bool isAcOn = false;
-  bool isMotion =false;
+  bool isMotion = false;
 
   @override
   void initState() {
@@ -35,6 +35,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Db.defaultValueDatabase('ToggleButton/IsAcOn', (bool value) {
       setState(() {
         isAcOn = value;
+      });
+    });
+    Db.defaultValueDatabase('ToggleButton/IsMotionOn', (bool value) {
+      setState(() {
+        isMotion = value;
       });
     });
   }
@@ -59,8 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
       isAcOn = !isAcOn;
     });
   }
-    void toggleMotion() {
-    rtdb.ref('ToggleButton/IsAcOn').set(!isAcOn);
+
+  void toggleMotion() {
+    rtdb.ref('ToggleButton/IsMotionOn').set(!isMotion);
     setState(() {
       isMotion = !isMotion;
     });
@@ -161,8 +167,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         subtitle: "Posisi Lampu",
                       ),
                       MyAccessories(
-                        switchOnTap: toggleLamp,
-                        switchValue: isLampOn,
+                        switchOnTap: toggleMotion,
+                        switchValue: isMotion,
                         image: const AssetImage("assets/images/motion.png"),
                         activeSwitchColor: darkGreen,
                         activeBgColor: lightGreen,
@@ -195,13 +201,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 sort: (a, b) => Sorting.desc(a, b),
                 query: rtdb.ref('Notification'),
                 shrinkWrap: true,
+                defaultChild: Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: darkOrange,
+                  ),
+                ),
                 itemBuilder: (context, snapshot, animation, index) {
                   Map notify = snapshot.value as Map;
                   notify['key'] = snapshot.key;
                   return MyNotificationCard(
-                    onPressed: () {},
+                    onPressed: () {
+                      rtdb.ref('Notification').child(notify['key']).remove();
+                    },
                     title: notify['title'].toString(),
                     subtitle: notify['subtitle'].toString(),
+                    timestamp: ConvertTime.toTimeAgo(notify['timestamp']),
                   );
                 },
               ),

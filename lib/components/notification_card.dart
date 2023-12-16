@@ -7,10 +7,11 @@ class MyNotificationCard extends StatelessWidget {
     required this.onPressed,
     required this.title,
     required this.subtitle,
+    required this.timestamp
   });
 
   final VoidCallback onPressed;
-  final String title, subtitle;
+  final String title, subtitle, timestamp;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,16 @@ class MyNotificationCard extends StatelessWidget {
                     color: greyText,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  timestamp,
+                  style: TextStyle(
+                    color: black,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1,
                   ),
                 ),
               ],

@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'HomePimpa',
+      title: 'Home Pimpa',
       theme: ThemeData(
         fontFamily: 'MontserratAlternates',
       ),
