@@ -1,6 +1,6 @@
 # Project IoT Smart Home App
 
-A new Flutter project.
+Using [Firebase](https://firebase.google.com)
 
 ## Getting Started
 
