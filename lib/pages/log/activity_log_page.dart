@@ -46,8 +46,12 @@ class _MyActivityLogState extends State<MyActivityLog> {
           Map user = snapshot.value as Map;
           user['key'] = snapshot.key;
           return MyActivityLogCard(
-            onPressed: () {
-              rtdb.ref('ActivityLog').child(user['key']).remove();
+            onPressed: () async {
+              bool confirmDelete =
+                  await Db.showDeleteConfirmationDialog(context);
+              if (confirmDelete == true) {
+                rtdb.ref('ActivityLog').child(user['key']).remove();
+              }
             },
             name: user['name'].toString(),
             email: user['email'].toString(),

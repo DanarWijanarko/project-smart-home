@@ -138,6 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             activeBgColor: lightBlue2,
                             title: "Front Gate",
                             subtitle: data.toString(),
+                            isnull: (data.toString() == "null") ? true : false,
                           );
                         },
                       ),
@@ -200,6 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
               FirebaseAnimatedList(
                 sort: (a, b) => Sorting.desc(a, b),
                 query: rtdb.ref('Notification'),
+                primary: false,
                 shrinkWrap: true,
                 defaultChild: Center(
                   child: CircularProgressIndicator(
@@ -211,8 +213,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   Map notify = snapshot.value as Map;
                   notify['key'] = snapshot.key;
                   return MyNotificationCard(
-                    onPressed: () {
-                      rtdb.ref('Notification').child(notify['key']).remove();
+                    onPressed: () async {
+                      bool confirmDelete =
+                          await Db.showDeleteConfirmationDialog(context);
+                      if (confirmDelete == true) {
+                        rtdb.ref('Notification').child(notify['key']).remove();
+                      }
                     },
                     title: notify['title'].toString(),
                     subtitle: notify['subtitle'].toString(),

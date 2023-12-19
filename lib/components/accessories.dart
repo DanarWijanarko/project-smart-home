@@ -11,10 +11,11 @@ class MyAccessories extends StatelessWidget {
     required this.activeBgColor,
     required this.title,
     required this.subtitle,
+    this.isnull = false,
   });
 
   final VoidCallback switchOnTap;
-  final bool switchValue;
+  final bool switchValue, isnull;
   final AssetImage image;
   final Color activeSwitchColor, activeBgColor;
   final String title, subtitle;
@@ -64,19 +65,31 @@ class MyAccessories extends StatelessWidget {
               const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: (isnull)
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    width: 102,
-                    child: Text(
-                      subtitle,
-                      style: TextStyle(
-                        color: greyText,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
+                  (isnull)
+                      ? Container(
+                          padding: const EdgeInsets.only(left: 15),
+                          width: 70,
+                          child: LinearProgressIndicator(
+                            color: darkOrange,
+                            backgroundColor: white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        )
+                      : SizedBox(
+                          width: 102,
+                          child: Text(
+                            subtitle,
+                            style: TextStyle(
+                              color: greyText,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
                   Text(
                     switchValue ? 'On' : 'Off',
                     style: TextStyle(

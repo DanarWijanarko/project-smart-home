@@ -79,88 +79,90 @@ class _MyAddPersonPageState extends State<MyAddPersonPage> {
           ),
         ),
       ),
-      body: StreamBuilder(
-        stream: rtdb.ref('temp/CardId').onValue,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: darkOrange,
-                strokeWidth: 5,
-              ),
+      body: SingleChildScrollView(
+        child: StreamBuilder(
+          stream: rtdb.ref('temp/CardId').onValue,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: darkOrange,
+                  strokeWidth: 5,
+                ),
+              );
+            }
+            Db.handleCardIdData(
+              snapshot.hasData,
+              snapshot.data!,
+              _cardIdController,
             );
-          }
-          Db.handleCardIdData(
-            snapshot.hasData,
-            snapshot.data!,
-            _cardIdController,
-          );
-          return Form(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MyTextFieldCustom(
-                    controller: _cardIdController,
-                    textFieldTitle: "Nomor Id pada Kartu RFID",
-                    hintText: "Tempelkan Kartu pada RFID",
-                    hintField: "Terisi Otomatis*",
-                    readOnly: true,
-                    validator: FormBuilderValidators.required(
-                      errorText: "Tolong Tempelkan Kartu pada RFID...!",
+            return Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyTextFieldCustom(
+                      controller: _cardIdController,
+                      textFieldTitle: "Nomor Id pada Kartu RFID",
+                      hintText: "Tempelkan Kartu pada RFID",
+                      hintField: "Terisi Otomatis*",
+                      readOnly: true,
+                      validator: FormBuilderValidators.required(
+                        errorText: "Tolong Tempelkan Kartu pada RFID...!",
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  MyTextFieldCustom(
-                    controller: _nameController,
-                    textFieldTitle: "Masukkan Nama Lengkap",
-                    hintText: "e.g. Han So-hee",
-                    validator: FormBuilderValidators.required(
-                      errorText: "Tolong Masukkan Nama Pengguna...!",
+                    const SizedBox(height: 15),
+                    MyTextFieldCustom(
+                      controller: _nameController,
+                      textFieldTitle: "Masukkan Nama Lengkap",
+                      hintText: "e.g. Han So-hee",
+                      validator: FormBuilderValidators.required(
+                        errorText: "Tolong Masukkan Nama Pengguna...!",
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  MyTextFieldCustom(
-                    controller: _emailController,
-                    textFieldTitle: "Masukkan Alamat Email",
-                    hintText: "e.g. sohee@example.com",
-                    validator: FormBuilderValidators.required(
-                      errorText: "Tolong Masukkan Alamat Email...!",
+                    const SizedBox(height: 15),
+                    MyTextFieldCustom(
+                      controller: _emailController,
+                      textFieldTitle: "Masukkan Alamat Email",
+                      hintText: "e.g. sohee@example.com",
+                      validator: FormBuilderValidators.required(
+                        errorText: "Tolong Masukkan Alamat Email...!",
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: MyButtonCustom(
-                      onPressed: saveButton,
-                      bgColor: darkOrange,
-                      bgRadius: 15,
-                      onTapColor: darkOrange,
-                      onTapRadius: 15,
-                      onTapPadding: const EdgeInsets.all(3),
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: Text(
-                          "Simpan",
-                          style: TextStyle(
-                            color: white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.5,
+                    const SizedBox(height: 15),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: MyButtonCustom(
+                        onPressed: saveButton,
+                        bgColor: darkOrange,
+                        bgRadius: 15,
+                        onTapColor: darkOrange,
+                        onTapRadius: 15,
+                        onTapPadding: const EdgeInsets.all(3),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Text(
+                            "Simpan",
+                            style: TextStyle(
+                              color: white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.5,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
