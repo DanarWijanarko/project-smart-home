@@ -73,11 +73,11 @@ class Db {
         actions: [
           MyButtonCustom(
             onPressed: () => Navigator.pop(context, false),
-            bgColor: white,
+            bgColor: Colors.transparent,
             bgRadius: 25,
-            onTapColor: grey,
+            onTapColor: greyText,
             onTapRadius: 25,
-            padding: const EdgeInsets.all(3),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Text(
               "Batal",
               style: TextStyle(color: black),
@@ -85,11 +85,11 @@ class Db {
           ),
           MyButtonCustom(
             onPressed: () => Navigator.pop(context, true),
-            bgColor: white,
+            bgColor: Colors.transparent,
             bgRadius: 25,
             onTapColor: red,
             onTapRadius: 25,
-            padding: const EdgeInsets.all(3),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Text(
               "Hapus",
               style: TextStyle(color: red),

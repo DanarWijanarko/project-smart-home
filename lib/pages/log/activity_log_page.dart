@@ -32,32 +32,51 @@ class _MyActivityLogState extends State<MyActivityLog> {
           ),
         ),
       ),
-      body: FirebaseAnimatedList(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-        sort: (DataSnapshot a, DataSnapshot b) => Sorting.desc(a, b),
-        query: rtdb.ref('ActivityLog'),
-        defaultChild: Center(
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-            color: darkOrange,
-          ),
-        ),
-        itemBuilder: (context, snapshot, animation, index) {
-          Map user = snapshot.value as Map;
-          user['key'] = snapshot.key;
-          return MyActivityLogCard(
-            onPressed: () async {
-              bool confirmDelete =
-                  await Db.showDeleteConfirmationDialog(context);
-              if (confirmDelete == true) {
-                rtdb.ref('ActivityLog').child(user['key']).remove();
-              }
-            },
-            name: user['name'].toString(),
-            email: user['email'].toString(),
-            time: ConvertTime.toTimeAgo(user['time']),
-            status: "Membuka Pintu",
-          );
+      body: StreamBuilder(
+        stream: rtdb.ref('ActivityLog').onValue,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: darkOrange,
+              ),
+            );
+          } else if (snapshot.data?.snapshot.value == null) {
+            return Center(
+              child: Text(
+                'No Data Found!',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: black,
+                ),
+              ),
+            );
+          } else {
+            return FirebaseAnimatedList(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+              sort: (DataSnapshot a, DataSnapshot b) => Sorting.desc(a, b),
+              query: rtdb.ref('ActivityLog'),
+              itemBuilder: (context, snapshot, animation, index) {
+                Map user = snapshot.value as Map;
+                user['key'] = snapshot.key;
+                return MyActivityLogCard(
+                  onPressed: () async {
+                    bool confirmDelete =
+                        await Db.showDeleteConfirmationDialog(context);
+                    if (confirmDelete == true) {
+                      rtdb.ref('ActivityLog').child(user['key']).remove();
+                    }
+                  },
+                  name: user['name'].toString(),
+                  email: user['email'].toString(),
+                  time: ConvertTime.toTimeAgo(user['time'] ?? 0),
+                  status: "Membuka Pintu",
+                );
+              },
+            );
+          }
         },
       ),
     );

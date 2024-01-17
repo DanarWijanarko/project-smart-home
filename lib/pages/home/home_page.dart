@@ -198,32 +198,61 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 15),
 
               // Notification Items Start
-              FirebaseAnimatedList(
-                sort: (a, b) => Sorting.desc(a, b),
-                query: rtdb.ref('Notification'),
-                primary: false,
-                shrinkWrap: true,
-                defaultChild: Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: darkOrange,
-                  ),
-                ),
-                itemBuilder: (context, snapshot, animation, index) {
-                  Map notify = snapshot.value as Map;
-                  notify['key'] = snapshot.key;
-                  return MyNotificationCard(
-                    onPressed: () async {
-                      bool confirmDelete =
-                          await Db.showDeleteConfirmationDialog(context);
-                      if (confirmDelete == true) {
-                        rtdb.ref('Notification').child(notify['key']).remove();
-                      }
-                    },
-                    title: notify['title'].toString(),
-                    subtitle: notify['subtitle'].toString(),
-                    timestamp: ConvertTime.toTimeAgo(notify['timestamp']),
-                  );
+              StreamBuilder(
+                stream: rtdb.ref('Notification').onValue,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: darkOrange,
+                      ),
+                    );
+                  } else if (snapshot.data?.snapshot.value == null) {
+                    return Center(
+                      child: Text(
+                        'No Notification!',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: greyText,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return FirebaseAnimatedList(
+                      sort: (a, b) => Sorting.desc(a, b),
+                      query: rtdb.ref('Notification'),
+                      primary: false,
+                      shrinkWrap: true,
+                      defaultChild: Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: darkOrange,
+                        ),
+                      ),
+                      itemBuilder: (context, snapshot, animation, index) {
+                        Map notify = snapshot.value as Map;
+                        notify['key'] = snapshot.key;
+                        return MyNotificationCard(
+                          onPressed: () async {
+                            bool confirmDelete =
+                                await Db.showDeleteConfirmationDialog(context);
+                            if (confirmDelete == true) {
+                              rtdb
+                                  .ref('Notification')
+                                  .child(notify['key'])
+                                  .remove();
+                            }
+                          },
+                          title: notify['title'].toString(),
+                          subtitle: notify['subtitle'].toString(),
+                          timestamp:
+                              ConvertTime.toTimeAgo(notify['timestamp'] ?? 0),
+                        );
+                      },
+                    );
+                  }
                 },
               ),
               // Notification Items End
